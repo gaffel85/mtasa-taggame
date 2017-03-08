@@ -2,6 +2,11 @@ local VERY_CLOSE_VEHICLE_DIST = 15
 local CLOSE_VEHICLE_DIST = 50
 local MAX_VEHICLES_IN_CLOSE = 5
 
+local allAircrafts = { [592]=true, [577]=true, [511]=true, [548]=true, [512]=true, [593]=true, [425]=true, [520]=true, [417]=true, [487]=true, [553]=true, [488]=true, [497]=true,
+[563]=true, [476]=true, [447]=true, [519]=true, [460]=true, [469]=true, [513]=true }
+
+local allBoats = { [472]=true, [473]=true, [493]=true, [595]=true, [484]=true, [430]=true, [453]=true, [452]=true, [446]=true, [454]=true, [539]=true }
+
 spawnBeams = {}
 noSpawnMarkers = {}
 
@@ -14,7 +19,7 @@ end
 
 function spawnVechicleInBeam(beam, thePlayer)
 	local x,y,z = getElementPosition(beam)
-	local newVehicle = createVehicle(math.random(400,610), x, y, z + 2)
+	local newVehicle = createVehicle(randomVehicleModel(), x, y, z + 2)
 	if(newVehicle) then
 		--setVehicleDamageProof(newVehicle, true)
 		--setElementCollisionsEnabled(newVehicle, false)
@@ -26,6 +31,17 @@ function spawnVechicleInBeam(beam, thePlayer)
 	end
 end
 
+function randomVehicleModel()
+	local modelId = -1
+	while modelId < 0 do
+		modelId = math.random(400,610)
+		if (allAircrafts[modelId] or allBoats[modelId]) then
+			modelId = -1
+		end
+	end
+	retur modelId;
+end
+
 function vehiclesToClose(x, y, z)
 	local vehicles = getElementsByType ( "vehicle" )
 	local nbrClose, nbrVeryClose = 0
@@ -34,7 +50,7 @@ function vehiclesToClose(x, y, z)
 		local distX = math.abs(x - vX)
 		local distY = math.abs(y - vY)
 		if(distX > CLOSE_VEHICLE_DIST or distY > CLOSE_VEHICLE_DIST) then
-		
+
 		elseif(distX > VERY_CLOSE_VEHICLE_DIST or distY > VERY_CLOSE_VEHICLE_DIST) then
 			nbrClose = nbrClose + 1
 			if(nbrClose >= MAX_VEHICLES_IN_CLOSE) then
@@ -44,7 +60,7 @@ function vehiclesToClose(x, y, z)
 			return true
 		end
 	end
-	
+
 	return false
 end
 
@@ -55,7 +71,7 @@ function noSpawnMarkerLeave( leaveElement, matchingDimension )
 			noSpawnMarkers[getPlayerIP(leaveElement)] = nil
 			setTimer(createVehicleSpawnBeam, 3000, 1, leaveElement)
 		end
-    end
+	end
 end
 
 function destroySpawnBeam(thePlayer)
@@ -82,10 +98,10 @@ end
 function createVehicleSpawnBeam(thePlayer)
 	if(getPedOccupiedVehicle(thePlayer) == false) then
 		local x,y,z = getElementPosition(thePlayer)
-		if(vehiclesToClose(x,y,z)) then
-			setTimer(createVehicleSpawnBeam, 3000, 1, thePlayer)
-			return
-		end
+		--if(vehiclesToClose(x,y,z)) then
+		--	setTimer(createVehicleSpawnBeam, 3000, 1, thePlayer)
+		--	return
+		--end
 		local beamX = x + math.random(0,0)-0
 		local beamY = y + math.random(0,0)-0
 		local arrowStartHeight = 2
@@ -99,14 +115,14 @@ function createVehicleSpawnBeam(thePlayer)
 		--local colorChange = 255 / changes
 		--setTimer(function(beam, colorChange)
 		--	local R, G, B, A = getMarkerColor( beam )
-		--	setMarkerColor ( beam, R, G+colorChange, B+colorChange, 255 )   
+		--	setMarkerColor ( beam, R, G+colorChange, B+colorChange, 255 )
 		--end, changeInterval, changes, beam, colorChange)
-		
+
 		local timerMarkerTimer = setTimer(function(timerMarker, arrowSteps)
 			local x,y,z = getElementPosition(timerMarker)
 			setElementPosition(  timerMarker, x, y, z - arrowSteps)
 		end, changeInterval, changes, timerMarker, arrowSteps)
-		
+
 		local spawnTimer = setTimer(spawnVechicleInBeam, spawnTime, 1, beam, thePlayer)
 		local spawnBeam = {beam = beam, timerMarker = timerMarker, timerMarkerTimer = timerMarkerTimer, spawnTimer = spawnTimer}
 		spawnBeams[getPlayerIP(thePlayer)] = spawnBeam
@@ -114,19 +130,17 @@ function createVehicleSpawnBeam(thePlayer)
 end
 
 function playerExitedVehicleForVehicleBeam()
-	setTimer(createVehicleSpawnBeam, 3000, 1, source)
+	--setTimer(createVehicleSpawnBeam, 3000, 1, source)
 end
 addEventHandler("onPlayerVehicleExit", getRootElement(), playerExitedVehicleForVehicleBeam)
 
 function onPlayerSpawnForVehicleBeam()
-	setTimer(createVehicleSpawnBeam, 5000, 1, source)
+	--setTimer(createVehicleSpawnBeam, 5000, 1, source)
 end
 addEventHandler("onPlayerSpawn", getRootElement(), onPlayerSpawnForVehicleBeam)
 
 function onPlayerJoinForVehicleBeam()
-	bindKey ( source, "x", "down", cancelVehicleButtonPressed ) 
+	--bindKey ( source, "x", "down", cancelVehicleButtonPressed )
+	bindKey ( source, "x", "down", createVehicleSpawnBeam )
 end
 addEventHandler("onPlayerJoin", getRootElement(), onPlayerJoinForVehicleBeam)
-
-
-

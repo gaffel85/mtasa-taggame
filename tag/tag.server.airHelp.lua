@@ -1,4 +1,4 @@
-local aircrafts = { [592]=true, [577]=true, [511]=true, [548]=true, [512]=true, [593]=true, [425]=true, [520]=true, [417]=true, [487]=true, [553]=true, [488]=true, [497]=true, 
+local aircrafts = { [592]=true, [577]=true, [511]=true, [548]=true, [512]=true, [593]=true, [425]=true, [520]=true, [417]=true, [487]=true, [553]=true, [488]=true, [497]=true,
 [563]=true, [476]=true, [447]=true, [519]=true, [460]=true, [469]=true, [513]=true }
 
 local boats = { [472]=true, [473]=true, [493]=true, [595]=true, [484]=true, [430]=true, [453]=true, [452]=true, [446]=true, [454]=true, [539]=true }
@@ -31,10 +31,12 @@ local INSTR_ID = 677
 local PARACHUTE_INSTR_ID = 687
 local PARACHUTE_INSTR = "God job! Now, enjoy the fall."
 
+local KILL_ON_WATER
+
 local testMode = false
 local state = STATE_LAND
 local stupidPlayer
- 
+
 function transformToJet(thePlayer, key, keyState)
 	transformToVehicle(thePlayer, PRIMARY_VEHICLE[state])
 end
@@ -57,12 +59,12 @@ function checkAndSetAirState(thePlayer, vehicle)
 	if(state == STATE_AIR or vehicle == nil or thePlayer ~= getTheHunted()) then
 		return false
 	end
-	
+
 	if(aircrafts[getElementModel ( vehicle )]) then
 		state = STATE_AIR
 		return true
 	end
-	
+
 	return false
 end
 
@@ -70,44 +72,56 @@ function checkAndSetLandState(thePlayer, vehicle)
 	if(state == STATE_SEA or thePlayer ~= getTheHunted()) then
 		return false
 	end
-	
+
 	if(isElementInWater(thePlayer)) then
 		state = STATE_SEA
 		return true
 	end
-	
+
 	if(vehicle ~= nil and boats[getElementModel ( vehicle )]) then
 		state = STATE_SEA
 		return true
 	end
-	
+
 	return false
 end
- 
+
 function checkToChangeState(thePlayer, vehicle)
-	if(thePlayer == nil) then
+	if(thePlayer == nil or thePlayer ~= getTheHunted()) then
 		return
 	end
-	
+
+  if KILL_ON_WATER then
+    if(isElementInWater(thePlayer) or
+       vehicle ~= nil and (
+         boats[getElementModel ( vehicle )] or
+         aircrafts[getElementModel ( vehicle )]
+       )
+     ) then
+      killPed ( thePlayer, thePlayer )
+    end
+    return
+  end
+
 	local changed = checkAndSetAirState(thePlayer, vehicle)
 	if(changed ~= true) then
 		changed = checkAndSetLandState(thePlayer, vehicle)
 	end
-	
+
 	if(changed) then
 		stupidPlayer = thePlayer
-		
+
 		local players = getElementsByType ( "player" )
 		for k,v in ipairs(players) do
 			if(testMode or v ~= stupidPlayer) then
 				displayMessageForPlayer ( v, INSTR_ID, getPlayerName(stupidPlayer)..INSTR[state], 5000 )
-				bindKey ( v, "8", "down", transformToJet ) 
-				bindKey ( v, "9", "down", transformToBarone ) 
+				bindKey ( v, "8", "down", transformToJet )
+				bindKey ( v, "9", "down", transformToBarone )
 			end
 		end
 	end
 end
- 
+
 function enterVehicleCheckAirHelp ( thePlayer, seat, jacked )
 	checkToChangeState(thePlayer, source)
 end
@@ -125,14 +139,18 @@ function getDropCoords(players, index)
 end
 
 function stupidPlayerDied( ammo, attacker, weapon, bodypart )
+  if KILL_ON_WATER then
+    return
+  end
+
 	if(source == stupidPlayer) then
 		state = STATE_LAND
 		local players = getElementsByType ( "player" )
 		local index = 0
 		for k,v in ipairs(players) do
 			if(testMode or v ~= stupidPlayer) then
-				unbindKey ( v, "8", "down", transformToJet ) 
-				unbindKey ( v, "9", "down", transformToBarone ) 
+				unbindKey ( v, "8", "down", transformToJet )
+				unbindKey ( v, "9", "down", transformToBarone )
 				fadeCamera ( v, false, FADE_TIME )
 				setTimer(function(thePlayer, players, index)
 					local x,y,z = getDropCoords(players, index)
@@ -144,7 +162,7 @@ function stupidPlayerDied( ammo, attacker, weapon, bodypart )
 				givePlayerParachute(v)
 				index = index + 1
 			end
-			
+
 		end
 		stupidPlayer = nil
 	end

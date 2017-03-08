@@ -3,20 +3,20 @@ local spawnPoints
 local theHuntedPlayer
 local minPlayers = 1
 
-local HUNTED_MODELS = {167, 140}
-local NORMAL_MODELS = {161, 306}
-local modelSelectRand = math.random(1,10)
+local HUNTED_MODELS = {167}--, 140}
+local NORMAL_MODELS = {161}--, 306}
+--local modelSelectRand = math.random(1,10)
 local modelSelectRandIndex = 1
-if(modelSelectRand == 1) then
-	modelSelectRandIndex = 2
-end
+--if(modelSelectRand == 1) then
+--	modelSelectRandIndex = 2
+--end
 local huntedModel = HUNTED_MODELS[modelSelectRandIndex]
 local normalModel = NORMAL_MODELS[modelSelectRandIndex]
 
 local RAW_TIME_AS_HUNTED_KEY = "raw.timeAsHunted"
 local FORMATTED_TIME_AS_HUNTED_KEY = "Time as Hunted"
 local WHOS_HUNTED_TEXT_ID = 1
-local itName = "The Chick"
+local itName = "The Cock"
 local huntedBlip
 local huntedMarker
 players = getElementsByType ( "player" )
@@ -39,13 +39,13 @@ function setHuntedPlayer(thePlayer)
 	theHuntedPlayer = thePlayer
 	showPlayerHudComponent ( theHuntedPlayer, "radar", false )
 	setElementModel ( theHuntedPlayer, huntedModel )
-	
+
 	if(huntedBlip ~= nil) then
 		destroyElement(huntedBlip)
 	end
 	huntedBlip = createBlipAttachedTo ( theHuntedPlayer, 0 )
 	setElementParent ( huntedBlip, theHuntedPlayer )
-	
+
 	if(huntedMarker == nil ) then
 		huntedMarker = createMarker ( 0, 0, 1, "arrow", 2.0, 255, 0, 0)
 	end
@@ -75,7 +75,7 @@ function chooseNewHuntedBasedOnDistanceTo(thePlayer)
 	end
 
 	local playerX, playerY, playerZ = getElementPosition ( thePlayer )
-	
+
 	local playerDistances = {}
 	local candidates = {}
 	for k,v in ipairs(players) do
@@ -88,9 +88,9 @@ function chooseNewHuntedBasedOnDistanceTo(thePlayer)
 			candidates[k] = v
 		end
 	end
-	
+
 	outputDebugString("Total: "..#playerDistances)
-	
+
 	local lowestDist
 	local closestPlayer
 	for k,dist in ipairs(playerDistances) do
@@ -99,15 +99,15 @@ function chooseNewHuntedBasedOnDistanceTo(thePlayer)
 			closestPlayer = candidates[k]
 		end
 	end
-	
+
 	if(closestPlayer ~= nil) then
-		choosePlayerAsHunted(closestPlayer) 
+		choosePlayerAsHunted(closestPlayer)
 	else
 		chooseRandomNewHunted()
 	end
 end
 
-function choosePlayerAsHunted(thePlayer) 
+function choosePlayerAsHunted(thePlayer)
 	removeOldHunted()
 	setHuntedPlayer(thePlayer)
 end
@@ -123,7 +123,7 @@ function checkToChooseIt(oldHunted)
 		outputDebugString("Hunted is already "..getPlayerName(theHuntedPlayer))
 		return
 	end
-	
+
 	if(oldHunted ~= nil) then
 		playersWithoutOld = {}
 		for k,v in ipairs(players) do
@@ -136,13 +136,13 @@ function checkToChooseIt(oldHunted)
 			players = playersWithoutOld
 		end
 	end
-	
+
 	setHuntedPlayer(players[math.random(1,#players)])
 	outputDebugString(itName.." is now "..getPlayerName(theHuntedPlayer).."!")
 	outputChatBox(itName.." is now "..getPlayerName(theHuntedPlayer).."!")
 end
 
-function doResetGame() 
+function doResetGame()
 	outputDebugString("Resetting game!")
 	removeOldHunted()
 	local players = getElementsByType ( "player" )
@@ -195,7 +195,7 @@ function respawnAllPlayers()
 end
 
 function startTagGameMap( startedMap )
-	local mapRoot = getResourceRootElement( startedMap ) 
+	local mapRoot = getResourceRootElement( startedMap )
     spawnPoints = getElementsByType ( "spawnpoint" , mapRoot )
 	respawnAllPlayers()
 	checkToChooseIt()
@@ -227,7 +227,7 @@ addEventHandler("onPlayerSpawn", getRootElement(), playerSpawnHandler)
 function leaveHandler()
 	theHuntedPlayer = nil
 	local chooseNew = thePlayer == theHuntedPlayer
-	setTimer(function(thePlayer) 
+	setTimer(function(thePlayer)
 		if(chooseNew) then
 			chooseRandomNewHunted()
 		end
@@ -244,7 +244,7 @@ function spawn(thePlayer)
 	else
 		spawnX, spawnY, spawnZ = getRandomSpawnPoint()
 	end
-	
+
 	spawnPlayer(thePlayer, spawnX, spawnY, spawnZ, 0, normalModel)
 	fadeCamera(thePlayer, true)
 	setCameraTarget(thePlayer, thePlayer)
@@ -265,10 +265,10 @@ function playerDied( ammo, attacker, weapon, bodypart )
 			killer = attacker
 		elseif ( getElementType ( attacker ) == "vehicle" ) then
 			-- we'll get the name from the attacker vehicle's driver
-			killer = getVehicleController ( attacker ) 
+			killer = getVehicleController ( attacker )
 		end
 	end
-	
+
 	if(source == theHuntedPlayer) then
 		if( killer ~= source and killer ~= nil ) then
 			outputChatBox(itName.." was killed by "..getPlayerName(killer))
@@ -278,7 +278,7 @@ function playerDied( ammo, attacker, weapon, bodypart )
 			chooseNewHuntedBasedOnDistanceTo(source)
 		end
 	end
-	
+
 	setTimer( spawn, 2000, 1, source)
 end
 addEventHandler( "onPlayerWasted", getRootElement( ), playerDied)
