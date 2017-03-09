@@ -31,7 +31,7 @@ local INSTR_ID = 677
 local PARACHUTE_INSTR_ID = 687
 local PARACHUTE_INSTR = "God job! Now, enjoy the fall."
 
-local KILL_ON_WATER
+local KILL_ON_WATER = true
 
 local testMode = false
 local state = STATE_LAND
@@ -87,10 +87,11 @@ function checkAndSetLandState(thePlayer, vehicle)
 end
 
 function checkToChangeState(thePlayer, vehicle)
+
 	if(thePlayer == nil or thePlayer ~= getTheHunted()) then
 		return
 	end
-
+	
   if KILL_ON_WATER then
     if(isElementInWater(thePlayer) or
        vehicle ~= nil and (

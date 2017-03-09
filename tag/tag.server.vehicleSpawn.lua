@@ -14,7 +14,7 @@ function finishVehicleSpawn(newVehicle, beam, thePlayer)
 	--setVehicleDamageProof(newVehicle, false)
 	--setElementCollisionsEnabled(newVehicle, true)
 	--setElementAlpha(newVehicle, 255)
-	createVehicleSpawnBeam(thePlayer)
+	--createVehicleSpawnBeam(thePlayer)
 end
 
 function spawnVechicleInBeam(beam, thePlayer)
@@ -27,7 +27,7 @@ function spawnVechicleInBeam(beam, thePlayer)
 		destroySpawnBeam(thePlayer)
 		setTimer(finishVehicleSpawn, 2000, 1, newVehicle, beam, thePlayer)
 	else
-		createVehicleSpawnBeam(thePlayer)
+		--createVehicleSpawnBeam(thePlayer)
 	end
 end
 
@@ -39,7 +39,7 @@ function randomVehicleModel()
 			modelId = -1
 		end
 	end
-	retur modelId;
+	return modelId
 end
 
 function vehiclesToClose(x, y, z)
