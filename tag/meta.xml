@@ -5,7 +5,7 @@
 	<include resource="killmessages" />
 	<include resource="easytext" />
 	<include resource="maplimits" />
-	
+
     <script src="tag.server.main.lua" />
 	<script src="tag.server.vehicleSpawn.lua" />
 	<script src="tag.server.weaponSpawn.lua" />

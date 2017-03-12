@@ -129,6 +129,82 @@ function createVehicleSpawnBeam(thePlayer)
 	end
 end
 
+function mixStuff()
+	changeVehicleModels()
+	changePickups()
+end
+
+function changePickups()
+	local pickups = getElementsByType("pickup")
+
+	for i,pickup in ipairs(pickups) do
+		if getPickupType ( pickup ) == 2 then
+			local weapon = getPickupWeapon ( pickup )
+
+			local otherPickup = math.random(1, 10)
+			if otherPickup <= 1 then
+				setPickupType ( pickup, math.random(0, 1), 100 )
+			else
+
+				if weapon == 22 then -- Normal pickup
+					local newWeapon = math.random(25, 33)
+					setPickupType ( pickup, 2, newWeapon, 1000 )
+				else -- Super weapon
+					local newWeapon = math.random(34, 38)
+					setPickupType ( pickup, 2, newWeapon, 100 )
+				end
+			end
+  	end
+	end
+end
+
+function changeVehicleModels()
+	outputDebugString("Mixing cars")
+	local cars = getElementsByType("vehicle")
+	local allCars = getValidVehicleModels ()
+
+	for i,car in ipairs(cars) do
+		if not car then
+			outputDebugString("Null car")
+			return
+		end
+		local carIndex = math.random(1, #allCars)
+		local carId = allCars[carIndex]
+		setElementModel (car, carId)
+	end
+end
+
+function getValidVehicleModels ( )
+	local validVehicles = { }
+	local invalidModels = {
+		['435']=true, ['449']=true, ['450']=true, ['537']=true,
+		['538']=true, ['569']=true, ['570']=true, ['584']=true,
+		['590']=true, ['591']=true, ['606']=true, ['607']=true,
+		['608']=true
+	}
+	local allAircrafts = {
+		[592]=true, [577]=true, [511]=true, [548]=true, [512]=true,
+		[593]=true, [425]=true, [520]=true, [417]=true, [487]=true,
+		[553]=true, [488]=true, [497]=true, [563]=true, [476]=true,
+		[447]=true, [519]=true, [460]=true, [469]=true, [513]=true
+	}
+
+	local allBoats = {
+		[472]=true, [473]=true, [493]=true, [595]=true, [484]=true,
+		[430]=true, [453]=true, [452]=true, [446]=true, [454]=true,
+		[539]=true
+	}
+
+	for i=400, 609 do
+		if ( not (invalidModels[i] or allAircrafts[i] or allBoats[i])) then
+			table.insert ( validVehicles, i )
+		end
+	end
+	return validVehicles
+end
+
+addEventHandler("onGamemodeMapStart", getRootElement(), mixStuff)
+
 function playerExitedVehicleForVehicleBeam()
 	--setTimer(createVehicleSpawnBeam, 3000, 1, source)
 end

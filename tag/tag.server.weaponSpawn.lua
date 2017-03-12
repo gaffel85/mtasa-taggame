@@ -1,4 +1,4 @@
-local WEAPON_PROB = 10
+local WEAPON_PROB = 40
 
 local BLIP_COLOR_R = {255, 0, 0, 255}
 local BLIP_COLOR_G = {255, 255, 0, 100}
@@ -14,7 +14,7 @@ local weaponSpawnVehicles = {}
 local weaponMarkers = {}
 
 function spawnWeapons( startedMap )
-	local mapRoot = getResourceRootElement( startedMap ) 
+	local mapRoot = getResourceRootElement( startedMap )
     local vehicles = getElementsByType ( "vehicle" , mapRoot )
 	for k,v in ipairs(vehicles) do
 		if(math.random(1,100) <= WEAPON_PROB) then
@@ -43,12 +43,12 @@ function enterVehicleToSpawnWeapon ( theVehicle, seat, jacked ) --when a player 
 		local weaponsList = WEAPONS[level]
 		local weaponId = weaponsList[math.random(1, #weaponsList)]
 		giveWeapon ( source, weaponId , 2000, true )
-		
+
 		local marker = weaponMarkers[theVehicle]
 		destroyElement(marker)
 		weaponMarkers[theVehicle] = nil
 		weaponSpawnVehicles[theVehicle] = nil
-		
+
 		displayMessageForPlayer ( source, 55, "You got a ".. getWeaponNameFromID(weaponId)..".", 3000)
 	end
 end
@@ -60,6 +60,6 @@ function removeWeaponInExplodedVehicle()
 	weaponMarkers[source] = nil
 	weaponSpawnVehicles[source] = nil
 end
- 
+
 -- by using getRootElement() as root, it works for any vehicle
 addEventHandler("onVehicleExplode", getRootElement(), removeWeaponInExplodedVehicle)
