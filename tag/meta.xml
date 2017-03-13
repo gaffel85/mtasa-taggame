@@ -11,4 +11,6 @@
 	<script src="tag.server.weaponSpawn.lua" />
 	<script src="tag.server.airHelp.lua" />
 	<script src="tag.server.admin.lua" />
+  <script src="tag.client.mapLimits.lua" type="client" />
+
 </meta>
