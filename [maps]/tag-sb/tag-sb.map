@@ -150,7 +150,6 @@
     <pickup id="pickup (Rocket Launcher) (11)" type="35" interior="0" amount="100" respawn="30000" dimension="0" alpha="255" posX="2323.2" posY="-1448.1" posZ="21" rotX="0" rotY="0" rotZ="0"></pickup>
     <spawnpoint id="spawnpoint (1)" interior="0" skin="121" dimension="0" posX="2472.8999" posY="-1685.5" posZ="13.5" rotX="0" rotY="0" rotZ="0"></spawnpoint>
     <spawnpoint id="spawnpoint (2)" interior="0" skin="121" dimension="0" alpha="255" posX="2705.2" posY="-1696.9" posZ="11.7" rotX="0" rotY="0" rotZ="0"></spawnpoint>
-    <spawnpoint id="spawnpoint (3)" interior="0" skin="121" dimension="0" alpha="255" posX="2815.8" posY="-1641.4" posZ="10.9" rotX="0" rotY="0" rotZ="0"></spawnpoint>
     <spawnpoint id="spawnpoint (4)" interior="0" skin="121" dimension="0" alpha="255" posX="2865.1001" posY="-1850.5" posZ="0" rotX="0" rotY="0" rotZ="0"></spawnpoint>
     <spawnpoint id="spawnpoint (5)" interior="0" skin="121" dimension="0" alpha="255" posX="2864.3" posY="-1939.4" posZ="11.1" rotX="0" rotY="0" rotZ="0"></spawnpoint>
     <spawnpoint id="spawnpoint (6)" interior="0" skin="121" dimension="0" alpha="255" posX="2769.3" posY="-2011.9" posZ="13.6" rotX="0" rotY="0" rotZ="0"></spawnpoint>
@@ -159,12 +158,6 @@
     <spawnpoint id="spawnpoint (9)" interior="0" skin="121" dimension="0" alpha="255" posX="2478.2" posY="-1951.5" posZ="13.4" rotX="0" rotY="0" rotZ="0"></spawnpoint>
     <spawnpoint id="spawnpoint (10)" interior="0" skin="121" dimension="0" alpha="255" posX="2518" posY="-1798.8" posZ="13.5" rotX="0" rotY="0" rotZ="0"></spawnpoint>
     <spawnpoint id="spawnpoint (11)" interior="0" skin="121" dimension="0" alpha="255" posX="2440.8" posY="-1739.3" posZ="13.8" rotX="0" rotY="0" rotZ="0"></spawnpoint>
-    <spawnpoint id="spawnpoint (12)" interior="0" skin="121" dimension="0" alpha="255" posX="2484.5" posY="-1524.2" posZ="24" rotX="0" rotY="0" rotZ="0"></spawnpoint>
-    <spawnpoint id="spawnpoint (13)" interior="0" skin="121" dimension="0" alpha="255" posX="2519.6001" posY="-1530.2" posZ="23.6" rotX="0" rotY="0" rotZ="0"></spawnpoint>
-    <spawnpoint id="spawnpoint (14)" interior="0" skin="121" dimension="0" alpha="255" posX="2521.8" posY="-1410.2" posZ="27" rotX="0" rotY="0" rotZ="0"></spawnpoint>
-    <spawnpoint id="spawnpoint (15)" interior="0" skin="121" dimension="0" alpha="255" posX="2512.7" posY="-1402.8" posZ="28.4" rotX="0" rotY="0" rotZ="0"></spawnpoint>
-    <spawnpoint id="spawnpoint (16)" interior="0" skin="121" dimension="0" alpha="255" posX="2657.6001" posY="-1428.4" posZ="30.5" rotX="0" rotY="0" rotZ="0"></spawnpoint>
-    <spawnpoint id="spawnpoint (17)" interior="0" skin="121" dimension="0" alpha="255" posX="2723.7" posY="-1481.5" posZ="59.2" rotX="0" rotY="0" rotZ="0"></spawnpoint>
     <vehicle id="vehicle (Sentinel) (102)" paintjob="3" interior="0" alpha="255" model="405" plate="FYON4HT" dimension="0" color="34,25,24,245,245,245,0,0,0,0,0,0" posX="2746.3999" posY="-2056" posZ="12.9" rotX="0" rotY="0" rotZ="0"></vehicle>
     <vehicle id="vehicle (Sentinel) (103)" paintjob="3" interior="0" alpha="255" model="405" plate="FYON4HT" dimension="0" color="34,25,24,245,245,245,0,0,0,0,0,0" posX="2817.1001" posY="-2059.7" posZ="11.1" rotX="0" rotY="0" rotZ="0"></vehicle>
     <vehicle id="vehicle (Sentinel) (104)" paintjob="3" interior="0" alpha="255" model="405" plate="FYON4HT" dimension="0" color="34,25,24,245,245,245,0,0,0,0,0,0" posX="2828.2" posY="-2101.6001" posZ="10.9" rotX="0" rotY="0" rotZ="0"></vehicle>
@@ -185,4 +178,17 @@
     <vehicle id="vehicle (Sentinel) (119)" paintjob="3" interior="0" alpha="255" model="405" plate="FYON4HT" dimension="0" color="34,25,24,245,245,245,0,0,0,0,0,0" posX="2431.5" posY="-1651.3" posZ="26.8" rotX="0" rotY="0" rotZ="0"></vehicle>
     <vehicle id="vehicle (Sentinel) (120)" paintjob="3" interior="0" alpha="255" model="405" plate="FYON4HT" dimension="0" color="34,25,24,245,245,245,0,0,0,0,0,0" posX="2457.2" posY="-1655.8" posZ="13.3" rotX="0" rotY="0" rotZ="0"></vehicle>
     <vehicle id="vehicle (Sentinel) (121)" paintjob="3" interior="0" alpha="255" model="405" plate="FYON4HT" dimension="0" color="34,25,24,245,245,245,0,0,0,0,0,0" posX="2461.3" posY="-1655.9" posZ="13.3" rotX="0" rotY="0" rotZ="0"></vehicle>
+    <spawnpoint id="spawnpoint (18)" interior="0" skin="121" dimension="0" posX="2496.5" posY="-1746.2" posZ="13.5" rotX="0" rotY="0" rotZ="0"></spawnpoint>
+    <spawnpoint id="spawnpoint (19)" interior="0" skin="121" dimension="0" alpha="255" posX="2459.3" posY="-1889.5" posZ="13.5" rotX="0" rotY="0" rotZ="0"></spawnpoint>
+    <spawnpoint id="spawnpoint (20)" interior="0" skin="121" dimension="0" alpha="255" posX="2423.5" posY="-1846.8" posZ="1.4" rotX="0" rotY="0" rotZ="0"></spawnpoint>
+    <spawnpoint id="spawnpoint (21)" interior="0" skin="121" dimension="0" alpha="255" posX="2459.1001" posY="-2015.5" posZ="13.5" rotX="0" rotY="0" rotZ="0"></spawnpoint>
+    <spawnpoint id="spawnpoint (22)" interior="0" skin="121" dimension="0" alpha="255" posX="2498.8999" posY="-1973.6" posZ="16.5" rotX="0" rotY="0" rotZ="0"></spawnpoint>
+
+    <maplimit>
+      <point x="2405.7" y="-2153.8999" />
+      <point x="2974.2" y="-2144.3" />
+      <point x="2915.3999" y="-1652.7" />
+      <point x="2395" y="-1624.3" />
+    </maplimit>
+
 </map>

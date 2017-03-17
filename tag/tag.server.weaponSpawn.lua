@@ -1,4 +1,4 @@
-local WEAPON_PROB = 40
+local WEAPON_PROB = 100
 
 local BLIP_COLOR_R = {255, 0, 0, 255}
 local BLIP_COLOR_G = {255, 255, 0, 100}
