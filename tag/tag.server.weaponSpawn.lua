@@ -1,4 +1,4 @@
-local WEAPON_PROB = 100
+local WEAPON_PROB = 40
 
 local BLIP_COLOR_R = {255, 0, 0, 255}
 local BLIP_COLOR_G = {255, 255, 0, 100}
@@ -14,8 +14,11 @@ local weaponSpawnVehicles = {}
 local weaponMarkers = {}
 
 function spawnWeapons( startedMap )
-	local mapRoot = getResourceRootElement( startedMap )
-    local vehicles = getElementsByType ( "vehicle" , mapRoot )
+	weaponSpawnVehicles = {}
+	weaponMarkers = {}
+
+	--local mapRoot = getResourceRootElement( startedMap )
+    local vehicles = getElementsByType ( "vehicle")-- , mapRoot )
 	for k,v in ipairs(vehicles) do
 		if(math.random(1,100) <= WEAPON_PROB) then
 			local levelRand = math.random(1,100)
@@ -63,3 +66,15 @@ end
 
 -- by using getRootElement() as root, it works for any vehicle
 addEventHandler("onVehicleExplode", getRootElement(), removeWeaponInExplodedVehicle)
+
+function respawnWeapons(thePlayer, command, spawnPercent)
+	WEAPON_PROB = tonumber(spawnPercent)
+	outputChatBox("New weapon spawn percentage: "..WEAPON_PROB)
+
+	for k, v in pairs(weaponMarkers) do
+	  destroyElement(v)
+	end
+
+	spawnWeapons()
+end
+addCommandHandler("weapon", respawnWeapons)
