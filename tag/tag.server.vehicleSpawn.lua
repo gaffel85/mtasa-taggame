@@ -1,6 +1,7 @@
 local VERY_CLOSE_VEHICLE_DIST = 15
 local CLOSE_VEHICLE_DIST = 50
 local MAX_VEHICLES_IN_CLOSE = 5
+local RELOAD_TIME = 5000
 
 local allAircrafts = { [592]=true, [577]=true, [511]=true, [548]=true, [512]=true, [593]=true, [425]=true, [520]=true, [417]=true, [487]=true, [553]=true, [488]=true, [497]=true,
 [563]=true, [476]=true, [447]=true, [519]=true, [460]=true, [469]=true, [513]=true }
@@ -9,6 +10,7 @@ local allBoats = { [472]=true, [473]=true, [493]=true, [595]=true, [484]=true, [
 
 spawnBeams = {}
 noSpawnMarkers = {}
+lastSpawnTime = {}
 
 function finishVehicleSpawn(newVehicle, beam, thePlayer)
 	--setVehicleDamageProof(newVehicle, false)
@@ -97,6 +99,12 @@ end
 
 function createVehicleSpawnBeam(thePlayer)
 	if(getPedOccupiedVehicle(thePlayer) == false) then
+
+		local lastSpawn = lastSpawnTime[thePlayer]
+		if (lastSpawn ~= nil and (getTickCount() - lastSpawn) < RELOAD_TIME) then
+			return
+		end
+
 		local x,y,z = getElementPosition(thePlayer)
 		--if(vehiclesToClose(x,y,z)) then
 		--	setTimer(createVehicleSpawnBeam, 3000, 1, thePlayer)
@@ -126,6 +134,7 @@ function createVehicleSpawnBeam(thePlayer)
 		local spawnTimer = setTimer(spawnVechicleInBeam, spawnTime, 1, beam, thePlayer)
 		local spawnBeam = {beam = beam, timerMarker = timerMarker, timerMarkerTimer = timerMarkerTimer, spawnTimer = spawnTimer}
 		spawnBeams[getPlayerIP(thePlayer)] = spawnBeam
+		lastSpawnTime[thePlayer] = getTickCount()
 	end
 end
 
@@ -195,8 +204,12 @@ function getValidVehicleModels ( )
 		[539]=true
 	}
 
+	local rcVehicles = {
+		[441]=true, [464]=true, [594]=true, [501]=true, [465]=true, [564]=true
+	}
+
 	for i=400, 609 do
-		if ( not (invalidModels[i] or allAircrafts[i] or allBoats[i])) then
+		if ( not (invalidModels[i] or allAircrafts[i] or allBoats[i] or rcVehicles[i])) then
 			table.insert ( validVehicles, i )
 		end
 	end
