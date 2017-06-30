@@ -41,7 +41,7 @@ addEventHandler("onGamemodeMapStart", getRootElement(), spawnWeapons)
 
 function enterVehicleToSpawnWeapon ( theVehicle, seat, jacked ) --when a player enters a vehicle
     local level = weaponSpawnVehicles[theVehicle]
-	if(level ~= nil) then
+	if(level ~= nil and source ~= getTheHunted()) then
 		outputDebugString("Weapon level "..level)
 		local weaponsList = WEAPONS[level]
 		local weaponId = weaponsList[math.random(1, #weaponsList)]
