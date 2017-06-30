@@ -16,6 +16,7 @@ local normalModel = NORMAL_MODELS[modelSelectRandIndex]
 local RAW_TIME_AS_HUNTED_KEY = "raw.timeAsHunted"
 local FORMATTED_TIME_AS_HUNTED_KEY = "Time as Hunted"
 local WHOS_HUNTED_TEXT_ID = 1
+local DAMAGE_CAR_FACTOR = 2
 local itName = "The Cock"
 local huntedBlip
 local huntedMarker
@@ -39,6 +40,8 @@ function setHuntedPlayer(thePlayer)
 	theHuntedPlayer = thePlayer
 	showPlayerHudComponent ( theHuntedPlayer, "radar", false )
 	setElementModel ( theHuntedPlayer, huntedModel )
+	takeAllWeapons ( theHuntedPlayer )
+	giveWeapon (theHuntedPlayer, 24 , 5000, true )
 
 	if(huntedBlip ~= nil) then
 		destroyElement(huntedBlip)
@@ -177,9 +180,9 @@ function damageItsCar()
 			if(health > 1000) then
 				health = 950
 			elseif(health < 650) then
-				health = health - 30
+				health = health - 30 * DAMAGE_CAR_FACTOR
 			else
-				health = health - 50
+				health = health - 50 * DAMAGE_CAR_FACTOR
 			end
 			setElementHealth ( theVehicle, health )
 		end
@@ -295,6 +298,13 @@ function createVehicleForPlayer(thePlayer, command, vehicleModel)
 	end
 end
 addCommandHandler("c", createVehicleForPlayer)
+
+function diableWeaponPickupForTheHuntedPlayer ( player )
+	if ( player == theHuntedPlayer) then
+		cancelEvent()
+	end
+end
+addEventHandler ( "onPickupHit", getRootElement(), diableWeaponPickupForTheHuntedPlayer )
 
 function commitSuicide ( sourcePlayer )
 	-- kill the player and make him responsible for it
