@@ -97,10 +97,32 @@ function cancelVehicleButtonPressed(thePlayer, key, keyState)
 	end
 end
 
+function removeFarAwayCars(x, y, z)
+	local cars = getElementsByType("vehicle")
+	local allCars = getValidVehicleModels ()
+
+	for i,car in ipairs(cars) do
+		if not car then
+			if isCarEmpty(car) then
+				destroyElement(car)
+			end
+		end
+end
+
+function isCarEmpty(car)
+	local counter = 0
+
+	for seat, player in pairs(getVehicleOccupants(car)) do
+	    counter = counter + 1
+	end
+
+	return counter == 0
+end
+
 function vehicleRain(thePlayer)
 	local x,y,z = getElementPosition(thePlayer)
 	local allCars = getValidVehicleModels ()
-
+	removeFarAwayCars(x, y, z)
 
 	x = x - 50
 	y = y - 50
