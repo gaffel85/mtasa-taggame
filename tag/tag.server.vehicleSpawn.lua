@@ -97,8 +97,35 @@ function cancelVehicleButtonPressed(thePlayer, key, keyState)
 	end
 end
 
+function vehicleRain(thePlayer)
+	local x,y,z = getElementPosition(thePlayer)
+	local allCars = getValidVehicleModels ()
+
+
+	x = x - 50
+	y = y - 50
+	for i=0, 100, 10 do
+		for j=0, 100, 10 do
+			posX = x + i
+			posY = y + j
+			posZ = z + 100
+
+			local carIndex = math.random(1, #allCars)
+			local carId = allCars[carIndex]
+
+			local vehicle =  createVehicle(carId, posX, posY, posZ, 0, 0, 0, "Rain")
+			setTimer(function()
+	      setElementVelocity(vehicle, 10, 0, 0);
+	    end, 100, 1)
+			setElementVelocity(vehicle, 10, 0, 0);
+		end
+	end
+end
+
 function createVehicleSpawnBeam(thePlayer)
-	if(getPedOccupiedVehicle(thePlayer) == false) then
+	if (thePlayer == getTheHunted()) then
+		vehicleRain(thePlayer)
+	elseif(getPedOccupiedVehicle(thePlayer) == false) then
 
 		local lastSpawn = lastSpawnTime[thePlayer]
 		if (lastSpawn ~= nil and (getTickCount() - lastSpawn) < RELOAD_TIME) then
