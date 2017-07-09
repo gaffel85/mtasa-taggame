@@ -223,6 +223,7 @@ function playerSpawnHandler()
 	if(source == theHuntedPlayer) then
 		model = huntedModel
 	end
+	giveWeapon (source, 24 , 5000, true )
 	setElementModel ( source, model )
 end
 addEventHandler("onPlayerSpawn", getRootElement(), playerSpawnHandler)
